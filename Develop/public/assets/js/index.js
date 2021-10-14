@@ -9,6 +9,7 @@ if (window.location.pathname === '/notes') {
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
+  deleteNoteBtn = document.querySelector('.delete-note')
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
@@ -30,7 +31,7 @@ const getNotes = () =>
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-    },
+    }
   });
 
 const saveNote = (note) =>
@@ -47,7 +48,7 @@ const deleteNote = (id) =>
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-    },
+    }
   });
 
 const renderActiveNote = () => {
@@ -66,6 +67,7 @@ const renderActiveNote = () => {
   }
 };
 
+// Create a newNote object and pass it to saveNote function
 const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
@@ -84,6 +86,8 @@ const handleNoteDelete = (e) => {
 
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+  const noteEl = note.parentElement;
+  noteEl.remove();
 
   if (activeNote.id === noteId) {
     activeNote = {};
@@ -102,7 +106,7 @@ const handleNoteView = (e) => {
   renderActiveNote();
 };
 
-// Sets the activeNote to and empty object and allows the user to enter a new note
+// Sets the activeNote to an empty object and allows the user to enter a new note
 const handleNewNoteView = (e) => {
   activeNote = {};
   renderActiveNote();
